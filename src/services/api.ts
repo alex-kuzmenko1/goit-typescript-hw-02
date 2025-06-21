@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const ACCESS_KEY = import.meta.env.VITE_UNSPLASH_KEY;
+const ACCESS_KEY = "8tuBj0WQjTcFNRDA15Qr-Q24lqD85NJ2uoEbEkiL6lA";
 const BASE_URL = "https://api.unsplash.com/search/photos";
 
 export interface UnsplashImage {
