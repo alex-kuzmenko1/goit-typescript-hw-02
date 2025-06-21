@@ -1,29 +1,42 @@
-import Modal from 'react-modal';
-import css from './ImageModal.module.css';
+import Modal from "react-modal";
+import styles from "./ImageModal.module.css";
+import { ExtendedUnsplashImage } from "../../services/api";
 
-Modal.setAppElement('#root');
+Modal.setAppElement("#root");
 
-export default function ImageModal({ image, onClose }) {
-  const handleBackdropClick = e => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
+interface ImageModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  image: ExtendedUnsplashImage | null;
+}
+
+export default function ImageModal({
+  isOpen,
+  onClose,
+  image,
+}: ImageModalProps) {
+  if (!image) return null;
 
   return (
     <Modal
-      isOpen={!!image}
+      isOpen={isOpen}
       onRequestClose={onClose}
-      onClick={handleBackdropClick}
-      className={css.modal}
-      overlayClassName={css.overlay}
+      contentLabel="Image Modal"
+      shouldCloseOnOverlayClick={true}
+      className={styles.modal}
+      overlayClassName={styles.overlay}
     >
-      <img src={image.urls.regular} alt={image.alt_description} />
-      <div className={css.info}>
-        <p><strong>Author:</strong> {image.user.name}</p>
-        <p><strong>Likes:</strong> {image.likes}</p>
-        <p><strong>Description:</strong> {image.alt_description || 'N/A'}</p>
-      </div>
+      <img
+        src={image.urls.regular}
+        alt={image.alt_description || "Image"}
+        className={styles.image}
+      />
+      <p>Author: {image.user.name}</p>
+      <p>Likes: {image.likes}</p>
+      <p>Description: {image.alt_description || "No description"}</p>
+      <button className={styles.button} onClick={onClose}>
+        Close
+      </button>
     </Modal>
   );
 }
